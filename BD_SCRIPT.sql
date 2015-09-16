@@ -37,7 +37,8 @@ CREATE SEQUENCE state_id_state_seq;
 CREATE TABLE state (
  id_state integer NOT NULL DEFAULT nextval('state_id_state_seq'),
  id_country integer NOT NULL,
- name character varying(50) NOT NULL
+ name character varying(50) NOT NULL,
+ initials character varying(2) NOT NULL
 );
 ALTER TABLE ONLY state
  ADD CONSTRAINT state_pkey PRIMARY KEY (id_state),
