@@ -88,8 +88,8 @@ CREATE SEQUENCE article_id_article_seq;
 CREATE TABLE article (
  id_article integer NOT NULL DEFAULT nextval('article_id_article_seq'),
  id_journal integer NOT NULL,
- titulo character varying(200) NOT NULL,
- ano numeric(4,0) NOT NULL,
+ title character varying(200) NOT NULL,
+ year numeric(4,0) NOT NULL,
  message character varying(50)
 );
 ALTER TABLE ONLY article
@@ -110,7 +110,6 @@ CREATE TABLE log (
  message text NOT NULL,
  data date NOT NULL
 );
-
 ALTER TABLE ONLY log
  ADD CONSTRAINT log_pkey PRIMARY KEY (id_log),
  ADD CONSTRAINT log_id_article_fkey FOREIGN KEY (id_article) REFERENCES article(id_article);
@@ -187,7 +186,7 @@ CREATE TABLE author (
  name character varying(100) NOT NULL,
  address character varying(100),
  id character varying(14) NOT NULL,
- foto bytea,
+ photo bytea,
  email character varying(50) NOT NULL,
  password character varying(100) NOT NULL,
  permission character(1) NOT NULL
