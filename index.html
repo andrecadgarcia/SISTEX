@@ -1,15 +1,17 @@
-<html ng-app='sistex'>
+<html ng-app='sistex'> //Using sistex as app from sistex.js
   <head>
     <meta charset="utf-8">
+    //Load CSS files
     <link rel="stylesheet" type="text/css" href="/SISTEX/css/home.css">
     <link rel="stylesheet" type="text/css" href="/SISTEX/css/main.css">  
+      //Load javascript files
       <script type="text/javascript" src="/SISTEX/js/angular.min.js"></script>
       <script type="text/javascript" src="/SISTEX/js/angular-route.js"></script>
       <script type="text/javascript" src="/SISTEX/js/sistex.js"></script>
       <script type="text/javascript" src="/SISTEX/js/md5.js"></script>
   </head>
-    
-  <body ng-controller="sistexController as sistex">
-      <div ng-view></div>
+  
+  <body ng-controller="sistexController as sistex"> //Define controller
+      <div ng-view></div> //View that will be injected by controller
   </body>
 </html>
