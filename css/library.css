@@ -1,0 +1,41 @@
+/* Override section in page.css --no footer */
+section {
+    width: 100%;
+    height: 90%;
+}
+
+/* Set bar to the left*/
+.articles-bar {
+	height: 100%;
+	width: 15%;
+	background-color: lightgray;
+	line-height: 50px;
+	float:left;
+}
+
+/* Separe each article by a thin border*/
+.article-button {
+	text-align: center;
+	color: black;
+	width: 100%;
+	height: 9%;
+    border-bottom-style: solid;
+    border-bottom-width:thin;
+    border-bottom-color: whitesmoke;
+}
+
+/* Change background article color when hovered*/
+.article-button:hover {
+	background-color: whitesmoke;
+}
+
+/* Set background color for right body*/
+.right-body {
+	background-color: darkgray;
+	width: 85%;
+	height: 100%;
+	margin-left: 15%;
+	margin-top: 0%;
+}
+
+/* TODO Form layout */
