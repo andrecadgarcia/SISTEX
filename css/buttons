@@ -1,0 +1,55 @@
+/* Set logo to left and add a margin */ /************************TODO -Load logo image*/
+.logo {
+  float:left; 
+  margin-left: 10%;
+  position: relative;
+  display: block;
+  padding: 20px;
+}
+
+/* Clear float from header*/
+.clear { 
+    clear: both;
+}
+
+/* Contains buttons */
+.nav {
+  width: 100%;    
+  margin: 0 auto;
+  text-align: right;
+  list-style-type: none;
+}
+
+/* Set buttons to be side by side */
+.button {
+    float:left;
+    display: inline;
+    padding: 20px;
+    margin-left: 10%;
+    position: relative;
+}
+
+/* Change button color when hovered */
+.button:hover {
+    background-color: dimgrey;
+}
+
+/* Set login button to right and add a margin*/
+.nav .login {
+  float:right;
+  margin-right: 10%;
+  position: relative;
+  display: block;
+  padding: 20px; 
+}
+
+/* Change login color when hovered */
+.nav .login:hover {
+  background-color: dimgrey;
+}
+
+/* Show dropdown login when login hovered */
+.nav .login:hover .hiddenLogin{
+  display: block;
+  margin-top: 20%;
+}
