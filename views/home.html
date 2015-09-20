@@ -1,0 +1,233 @@
+<!-- Header handles login --> 
+<header>
+    <!-- Logo div, when clicked routes you to home page -->
+    <div class="logo" ng-click="tab = 1">LOGO</div>
+        
+    <!-- Div for login button and dropdown login form -->
+    <div class="nav">
+            
+        <!-- Login div, when hovered dropdown login form -->>
+        <div class="login">LOGIN    
+            <div class="hiddenLogin">
+                <!-- Login Facabook -->
+                <div class="facebook">FACEBOOK</div>
+                
+                <!-- Login Google -->
+                <div class="google">GOOGLE</div>
+                
+                <!-- Form General Login -->
+                <form name="loginForm" ng-submit="loginForm.$valid" novalidate>
+                    <!-- Table (identation) -->   
+                    <table style="margin-left: 10%; margin-bottom: 5%;">
+               		     <tr></tr>
+                         <!--EMAIL-->
+                   	     <tr>
+                            <!-- Email input -->
+                   		    <td>EMAIL:</td>
+                            <td><input  type="email" 
+                                        class="inputs"
+                                        ng-model="login.email"
+                                        placeholder="name@company.com" 
+                                        title="Email"
+                                        required>
+                            </input></td>
+                   	     </tr>
+                         <!--PASSWORD-->   
+                   	     <tr>
+                   		    <!-- Password input -->
+                            <td>SENHA:</td>
+                            <td><input  type="password" 
+                                        class="inputs"
+                                        ng-model="login.password"
+                                        title="Password" 
+                                        required>
+                            </input></td>
+                   	     </tr>
+                    </table>
+
+                    <!-- Submit Login -->
+        		    <input type="submit" name="Login" ng-click="sistex.login(login)"></input>
+                </form>
+
+                <!-- If login not successful show error message -->
+                <div>{{status}}</div>
+
+                <!-- forgot password link -->
+                <div><a>Recuperar Senha</a></div> 
+
+                <!-- Create new Account link -->
+                <div>Ainda não possui uma Conta? <a href="" ng-click="tab = 2">Crie Aqui</a></div>
+            
+            </div>
+        </div>
+    </div>
+
+    <!-- Div to clear float in header-->
+    <div class="clear"></div>
+</header>
+
+<!-- Section shows home page and register author tabs -->
+<section>
+    <!-- Div that slides images from right to left -->
+    <div id="slider" ng-show="tab === 1">
+        <!-- Images set stored in assets/slider folder -->
+        <figure>
+            <img src="assets/img1.jpg" alt="">
+            <img src="assets/img2.jpg" alt="">
+            <img src="assets/img3.jpg" alt="">
+            <img src="assets/img4.jpg" alt="">
+        </figure>
+    </div>
+    
+    <!-- Div that contains form to register new Author -->
+    <div class="newAuthor" ng-show="tab === 2"> 
+        <!-- Form New User -->
+        <form name="newAuthorForm" ng-submit="newAuthorForm.$valid" novalidate>
+            <table>
+                <!--NAME and PHOTO-->
+                <tr>
+                    <!-- Name Input -->
+                    <td>Nome</td>
+                    <td><input  type="text"
+                                name="name"
+                                ng-model="newAuthor.name"
+                                placeholder="Nome" 
+                                title="Name"
+                                ng-class="{invalid:(newAuthorForm.name.$invalid && newAuthorForm.name.$dirty), valid:(newAuthorForm.name.$valid),blank:(newAuthorForm.name.$invalid)}"
+                                required>
+                    </input></td>
+                
+                    <!-- Photo Input -->    <!-- ********************TODO-->
+                    <td><input  type="image"
+                                ng-model="newAuthor.photo"
+                                title="Photo">
+                    </input></td>
+                </tr>
+                <!--EMAIL-->
+                <tr>
+                    <!-- Email Input -->
+                    <td>Email</td>
+                    <td><input  type="email"
+                                name="email"
+                                ng-model="newAuthor.email"
+                                placeholder="name@company.com" 
+                                title="Email"
+                                ng-class="{invalid:(newAuthorForm.email.$invalid && newAuthorForm.email.$dirty), valid:(newAuthorForm.email.$valid),blank:(newAuthorForm.email.$invalid)}"
+                                required>
+                    </input></td>
+                </tr>
+                <!--PASSWORD-->
+                <tr>
+                    <!-- Password Input -->
+                    <td>Senha</td>
+                    <td><input  type="password"
+                               name="passwd1";
+                                ng-model="newAuthor.passwd1"
+                               placeholder="Senha" 
+                                title="Password1"
+                                ng-class="{invalid:(newAuthor.passwd2 !== newAuthor.passwd1) && (newAuthorForm.passwd1.$dirty) && (newAuthorForm.passwd2.$dirty), valid:(newAuthor.passwd2 === newAuthor.passwd1) && (newAuthorForm.passwd1.$valid) && (newAuthorForm.passwd2.$valid), blank:(newAuthorForm.passwd1.$invalid) && (newAuthorForm.passwd2.$invalid)}"
+                                required>
+                    </input></td>
+                    <!-- Password Confirmation -->
+                    <td>Confimação da Senha</td>
+                    <td><input  type="password"
+                                name="passwd2";
+                                ng-model="newAuthor.passwd2"
+                                placeholder="Senha Confirmação" 
+                                title="Password2"
+                                ng-class="{invalid:(newAuthor.passwd2 !== newAuthor.passwd1) && (newAuthorForm.passwd1.$dirty) && (newAuthorForm.passwd2.$dirty), valid:(newAuthor.passwd2 === newAuthor.passwd1) && (newAuthorForm.passwd1.$valid) && (newAuthorForm.passwd2.$valid), blank:(newAuthorForm.passwd1.$invalid) && (newAuthorForm.passwd2.$invalid)}"
+                                required>
+                    </input></td>
+                </tr>
+                <!--ADDRESS-->
+                <tr>
+                    <!-- Address Input -->
+                    <td>Endereço</td>
+                    <td><input  type="text"
+                               ng-model="newAuthor.address"
+                               placeholder="Endereço" 
+                               title="Address">             
+                    </input></td>
+                </tr>
+                <!--ID and COUNTRY-->
+                <tr>
+                    <!-- CPF Input -->
+                    <td>CPF</td>
+                    <td><input  type="text"
+                               name="id"
+                               ng-model="newAuthor.id"
+                               placeholder="CPF" 
+                               title="Id"
+                               ng-class="{invalid:(newAuthorForm.id.$invalid && newAuthorForm.id.$dirty), valid:(newAuthorForm.id.$valid),blank:(newAuthorForm.id.$invalid)}"
+                                required>
+                    </input></td>
+                
+                    <!-- Country Selection -->
+                    <td>País</td>
+                    <td><select ng-model="newAuthor.country"
+                                name="country"
+                                ng-change="sistex.select(newAuthor.country,'id_country', 'state')"
+                                ng-options="obj.id as obj.name for obj in country"
+                                title="Country"
+                                ng-class="{invalid:(newAuthorForm.country.$invalid && newAuthorForm.country.$dirty), valid:(newAuthorForm.country.$valid),blank:(newAuthorForm.country.$invalid)}"
+                                required>
+                    </select></td>
+                </tr>
+                <!--STATE and CITY-->
+                <tr>
+                    <!-- State Selection -->
+                    <td>Estado</td>
+                    <td><select ng-model="newAuthor.state"
+                                name="state"
+                                ng-change="sistex.select(newAuthor.state,'id_state', 'city')"
+                                ng-options="obj.id as obj.name for obj in state"
+                                title="State"
+                                ng-class="{invalid:(newAuthorForm.state.$invalid && newAuthorForm.state.$dirty), valid:(newAuthorForm.state.$valid),blank:(newAuthorForm.state.$invalid)}"
+                                required>
+                    </select></td>
+                
+                    <!-- City Selection -->
+                    <td>Cidade</td>
+                    <td><select name="city"
+                                ng-model="newAuthor.city" 
+                                ng-options="obj.id as obj.name for obj in city"
+                                title="City"
+                                ng-class="{invalid:(newAuthorForm.city.$invalid && newAuthorForm.city.$dirty), valid:(newAuthorForm.city.$valid),blank:(newAuthorForm.city.$invalid)}"
+                                required>
+                    </select></td>
+                </tr>
+                <!--UNIVERSITY and DEPARTMENT-->
+                <tr>
+                    <!-- University Selection -->
+                    <td>Universidade</td>
+                    <td><select name="university"
+                                ng-model="newAuthor.university" 
+                                ng-options="obj.id as obj.name for obj in university"
+                                ng-change="sistex.select(newAuthor.university,'id_university', 'department')"
+                                title="University"
+                                ng-class="{invalid:(newAuthorForm.university.$invalid && newAuthorForm.university.$dirty), valid:(newAuthorForm.university.$valid),blank:(newAuthorForm.university.$invalid)}"
+                                required>
+                    </select></td>
+
+                    <!-- Department Selection -->
+                    <td>Departamento</td>
+                    <td><select name="department"
+                                ng-model="newAuthor.department" 
+                                ng-options="obj.id as obj.name for obj in department"
+                                title="Department"
+                                ng-class="{invalid:(newAuthorForm.department.$invalid && newAuthorForm.department.$dirty), valid:(newAuthorForm.department.$valid),blank:(newAuthorForm.department.$invalid)}"
+                                required>
+                    </select></td>
+                </tr>
+                    <!-- Submit Form -->
+                    <input type="submit" name="Cadastrar" ng-click="sistex.register(newAuthor)"></input>
+            </table>  
+        </form> 
+    </div>
+</section>
+
+<!-- Footer shows Contact us and About information --> <!-- ***************TODO-->
+<footer>
+    <!-- CONTACT US -->
+    <!-- ABOUT -->
+</footer>
