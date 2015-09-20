@@ -1,0 +1,109 @@
+<!-- Header handles register, edit and delete articles and logoff author -->
+<header>
+      <!-- Logo image -->
+	  <div id="nav-bar">LOGO</div>
+      <!-- Load register form to create a new article -->
+      <div id="nav-bar" ng-click="$parent.tab = 3;">CADASTRAR</div>
+      <!-- Delete article selected -->
+      <div id="nav-bar" ng-click="latex.delete(selectedArticle); $parent.tab = 3;">DELETAR</div>
+      <!-- Open edit page for selected article -->
+      <div id="nav-bar" ng-click="latex.edit(selectedArticle); $parent.tab = 3;">EDITAR</div>
+      <!-- Logoff author -->
+      <div id="nav-bar" ng-click="latex.logOff(); $parent.tab = 3;">SAIR</div>    
+</header>
+
+<!-- Section shows author's articles, pdf and register new article form -->
+<section>
+    
+    <!-- Article div shows in the right all author's articles -->
+    <div id="artigos">
+        <!-- Create a button for each author's article and limit article's title in 20 characters -->
+	    <div id="button_artigo" ng-repeat="article in articles" ng-maxlength="10" ng-click="latex.viewPDF(article.path, article.id); $parent.tab = 2;">{{article.title | limitTo:20}}
+        </div>
+    </div>
+    
+    <!-- Div next to article div, shows pdf when article is selected or register article form when button register is pressed -->
+    <div id="pdf">
+        <!-- Create iframe to show article's pdf --> <!-- *********BUG-->
+	    <div ng-show="tab === 2">
+          <iframe id="pdfShow" ng-src="{{path}}" width="100%" height="100%"></iframe>
+      </div>
+        <!-- Shows form to create new article -->
+        <div ng-show="tab === 3">
+            <!-- New article form -->
+            <form name="newArticleForm" ng-submit="newArticleForm.$valid" novalidate>
+                <!-- First Column -->
+                <table>
+                    <!--AUTHOR-->
+                    <tr>
+                        <!-- Auhtor Selection-->
+                        <td>Author</td>
+                        <td><select ng-model="newArticle.author"
+                                name="author"
+                                ng-option="obj.id as obj.name for obj in author"
+                                title="Author">
+                        </select></td>
+                    </tr>
+                    <!--AUTHORS-->
+                    <tr>
+                        <!-- Authors box -->
+                        <td>Authors</td>
+                        <!--*************TODO-->
+                    </tr>
+                </table>
+                <!-- Second Column -->
+                <table>
+                    <!--TITLE-->
+                    <tr>
+                        <!-- Title Input -->
+                        <td>Titulo</td>
+                        <td><input  type="text"
+                                    ng-model="newArticle.title"
+                                    name="title"
+                                    title="Title"
+                                    required>
+                        </input></td>
+                    </tr>
+                    <!--JOURNAL-->
+                    <tr>
+                        <!-- Journal Selection-->
+                        <td>Revista</td>
+                        <td><select ng-model="newArticle.journal"
+                                    name="journal"
+                                    ng-option="obj.id as obj.name for obj in journal"
+                                    title="journal">
+                        </select></td>
+                    </tr>
+                    <!--UNIVERSITY-->
+                    <tr>
+                        <!-- University Selection -->
+                        <td>Universidade</td>
+                        <td><select ng-model="newArticle.unversity"
+                                    name="univeristy"
+                                    ng-chang="sistex.select(newAuthor.university,'id_univeristy', 'department')"
+                                    ng-option="obj.id as obj.name for obj in university"
+                                    title="University">
+                        </select></td>
+                    </tr>
+                    <!--DEPARTMENT-->
+                    <tr>
+                        <!-- Department Selection -->
+                        <td>Departamento</td>
+                        <td><select ng-model="newArticle.department"
+                                    name="department"
+                                    ng-option="obj.id as obj.name for obj in department"
+                                    title="Department">
+                        </select></td>
+                    </tr>
+                    <!-- Submit form button -->
+                    <input type="submit" name="Cadastrar" ng-click="latex.register(newArticle)"></input>
+                </table>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Nothing in this footer -->
+<footer>
+    <!--NOTHING HERE-->
+</footer>
