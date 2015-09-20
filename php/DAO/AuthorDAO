@@ -1,0 +1,129 @@
+<?php
+
+class AuthorDAO {
+    
+    protected $conn;
+    
+    //constructor create a new DB connection
+    public function __construct() {
+        //DB configuration
+        $host='localhost';
+        $port='5432';
+        $db = 'sistex';
+        $username = 'postgres';
+        $password = 'root';
+        $dns = '';
+
+        $postgres = "pgsql:host=$host;port=$port;dbname=$db;user=$username;password=$password";
+        
+        try {
+            //Create connection
+            $this->conn = new PDO($postgres);
+        } catch (PDOException $e){
+            //Handles any exception ************TODO    
+        }
+    }
+    
+    //Execute sql query
+    protected function executeQuery($sql) {
+        $authorVO;
+        $result = $this->conn->query($sql);
+        $numRows = count($result); 
+        if($numRows > 0) {
+            for ($i = 0; $i < $numRows; $i++) {
+                //Fetch each result
+                $row = $result->fetch(PDO::FETCH_ASSOC);    
+                //Store in authorVO array
+                $authorVO[$i] = new AuthorVO($row["id_author"],
+                                             $row["name"],
+                                             $row["email"],
+                                             $row["password"],
+                                             $row["address"],
+                                             $row["id"],
+                                             $row["id_city"],
+                                             $row["id_department"],
+                                             $row["photo"]);
+                
+            }
+            return $authorVO;
+        }
+        //if nothing is found, return 'no result' 
+        else {
+            return "no result";   
+        }
+    }
+    
+    //Get an author by his id
+    public function getById_author($id_author) {
+        //Generate sql
+        $sql = "SELECT * FROM author WHERE id_author=" . $id_author;
+        return $this->executeQuery($sql);
+    }
+    
+    //Get an author by his email
+    public function getByEmail($email) {
+        //Generate sql
+        $sql = "SELECT * FROM author WHERE email='" . $email . "';";
+        return $this->executeQuery($sql);
+    }
+    
+    //Get all authors
+    public function getAuthors() {
+        //Generate sql
+        $sql = "SELECT * FROM author";
+        return $this->executeQuery($sql);
+    }
+    
+    //Save or update an author
+    public function save($authorVO) {
+        $affectedRows = 0;
+        $currentAuthorVO = 0;
+        
+        //if author has id, fetch him from DB and then update
+        if ($authorVO->getId_author() != "") {
+            $currentAuthorVO = $this->getById_author($authorVO->getId_author());
+            $sql = "UPDATE author SET
+                        name='" . $authorVO->getName() . "','" .
+                        "email='" . $authorVO->getEmail() . "','" . 
+                        "password='" . $authorVO->getPassword() . "','" .
+                        "address='" . $authorVO->getAddress() . "','" .
+                        "id='" . $authorVO->getId() . "','" .
+                        "id_city=" . $authorVO->getId_city() . "," .
+                        "id_department=" . $authorVO->getId_department() . ",'" .
+                        "photo='" . $authorVO->getPhoto() . "' " .
+                        "WHERE id_author=" . $currentAuthorVO->getId_author() . ";";
+            $stmt = $this->conn->query($sql);
+            return 'UPDATED';
+        }
+    
+        //if not, create a new author
+        else {
+            $sql = "INSERT INTO author (id_author, name, email, password, address, id, id_city, id_department, photo, permission) VALUES (DEFAULT,'" .                 $authorVO->getName() . "','" . 
+                              $authorVO->getEmail() . "','" . 
+                              $authorVO->getPassword() . "','" . 
+                              $authorVO->getAddress() . "','" . 
+                              $authorVO->getId() . "'," . 
+                              $authorVO->getId_city() . "," . 
+                              $authorVO->getId_department() . ",'" . 
+                              $authorVO->getPhoto() . "','B');";
+            $stmt = $this->conn->query($sql);
+            return 'INSERTED';
+        }
+    }
+    
+    //Delete an author
+    public function delete($authorVO) {
+        
+        //if author exists, delete him
+        if($authorVO->getId_author() != "") {
+            $currentAuthorVO = $this->getById_author($authorVO->getId_author());
+            $sql = "DELETE FROM author WHERE id_author=" . $currentAuthorVO->getId_author() . ";";
+            $stmt = $conn->query($sql);
+        }
+        
+        return 'DELETED';
+    }
+        
+}
+
+?>
