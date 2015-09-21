@@ -25,7 +25,7 @@ class CountryVO {
         return $this->name;
     }
      
-    //Store in Session author's info
+    //Store in Session country's info
     public function toSession() {
         session_start();
         $_SESSION["id_country"] = $this->id_country;
