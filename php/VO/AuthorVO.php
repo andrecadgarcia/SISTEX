@@ -5,8 +5,7 @@ class AuthorVO {
     
     //contructor creates a new author
     public function __construct($id_author, $name, $email, $password, $address, $id, $id_city, $id_department, $photo) {
-        if($id_author != "") $this->id_author = $id_author; //if id_author is not empty, a author is being selected 
-        else $id_author = ""; //if id_author is empty, a new author is being registered
+        $this->id_author = $id_author;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
