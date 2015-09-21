@@ -27,21 +27,22 @@ class AuthorDAO {
     //Execute sql query
     protected function executeQuery($sql) {
         $result = $this->conn->query($sql);
-        $numRows = count($result); 
+        //Fetch each result
+        $row = $result->fetchAll(PDO::FETCH_ASSOC); 
+        $numRows = count($row); 
         if($numRows > 0) {
             for ($i = 0; $i < $numRows; $i++) {
-                //Fetch each result
-                $row = $result->fetch(PDO::FETCH_ASSOC);    
+                   
                 //Store in authorVO array
-                $authorVO[$i] = new AuthorVO($row["id_author"],
-                                             $row["name"],
-                                             $row["email"],
-                                             $row["password"],
-                                             $row["address"],
-                                             $row["id"],
-                                             $row["id_city"],
-                                             $row["id_department"],
-                                             $row["photo"]);
+                $authorVO[$i] = new AuthorVO($row[$i]["id_author"],
+                                             $row[$i]["name"],
+                                             $row[$i]["email"],
+                                             $row[$i]["password"],
+                                             $row[$i]["address"],
+                                             $row[$i]["id"],
+                                             $row[$i]["id_city"],
+                                             $row[$i]["id_department"],
+                                             $row[$i]["photo"]);
                 
             }
             return $authorVO;
@@ -75,7 +76,6 @@ class AuthorDAO {
     
     //Save or update an author
     public function save($authorVO) {
-        $affectedRows = 0;
         $currentAuthorVO = 0;
         
         //if author has id, fetch him from DB and then update
