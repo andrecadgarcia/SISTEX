@@ -2,7 +2,7 @@
 
 class DepartmentDAO {
     
-    protected var $conn;
+    protected $conn;
     
     //constructor creates a new DB connection
     public function DepartmentDao() {
