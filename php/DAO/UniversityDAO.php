@@ -1,82 +1,101 @@
 <?php
-class UniversityVO {
-    protected $id_university, $id_city, $name, $address, $zip_code, $initials;
+
+class UniversityDAO {
     
-    //contructor creates a new country
-    public function __construct($id_university, $id_city, $name, $address, $zip_code, $initials) {
-        $this->id_university = $id_university;
-        $this->id_city = $id_city;
-        $this->name = $name;
-        $this->address = $address; 
-        $this->zip_code = $zip_code;
-        $this->initials = $initials;
+    protected $conn;
+    
+    //constructor creates a new DB connection
+    public function UniversityDAO() {
+        //DB configuration
+        $host='localhost';
+        $port='5432';
+        $db = 'sistex';
+        $username = 'postgres';
+        $password = 'root';
+        $dns = '';
+
+        $postgres = "pgsql:host=$host;port=$port;dbname=$db;user=$username;password=$password";
+        try {
+            $this->conn = new PDO($postgres);
+        } catch (PDOException $e) {
+            diedie("Could not connect to the database $db :" . $p->getMessage());
+        }
     }
     
-    //GETTERS and SETTERS for variables
-    public function setId_university($id_university) {
-        $this->id_univeristy = $id_university;
+    //Execute sql query
+    protected function executeQuery($sql) {
+        $result = $this->conn->query($sql);
+        //Fecth all results
+        $row = $result->fetchAll(PDO::FETCH_ASSOC);
+        $numRows = count($row);
+        if($numRows > 0) {
+            for ($i = 0; $i < $numRows; $i++) {
+                $universityVO[$i] = new UniversityVO($row[$i]["id_university"],
+                                                     $row[$i]["id_city"],
+                                                     $row[$i]["name"],
+                                                     $row[$i]["address"],
+                                                     $row[$i]["zip_code"],
+                                                     $row[$i]["initials"]);
+            }
+        }
+        return $universityVO;
     }
     
-    public function getId_university() {
-        return $this->id_university;
+    //Get a university by its id
+    public function getById_university($id_university) {
+        $sql = "SELECT * FROM university WHERE id_university=" . $id_university;
+        return $this->executeQuery($sql);
     }
     
-    public function setId_city($id_city) {
-        $this->id_city = $id_city;
+    //Get all univerisities
+    public function getUniversities() {
+        $sql = "SELECT * FROM university";
+        return $this->executeQuery($sql);
     }
     
-    public function getId_city() {
-        return $this->id_city;
+    //Save or update a university
+    public function save($universityVO) {
+        
+        //if university has id, fetch it from DB and then update
+        if($universityVO->getId_university() != "") {
+            $currentUniversityVO = $this->getById_university($universityVO->getId_university());
+            $sql = "UPDATE university SET
+                        id_city=" . $universityVO->getId_city() . "," .
+                        "name='" . $universityVO->getName() . "', " . 
+                        "address='" . $universityVO->getAddress() . "', " .
+                        "zip_code='" . $universityVO->getZip_code() . "', " .
+                        "initials='" . $universityVO->getInitials() . "' " . 
+                        "WHERE id_university=" . $currentUniversityVO->getId_university() . ";";
+            $stmt = $conn->query($sql);
+            return 'UPDATED';
+        }
+        
+        //if not, create a new university
+        else {
+            $sql = "INSERT INTO university (id_university, id_city, name, address, zip_code, initials) VALUES(DEFAULT," . 
+                                                                                $universityVO->getId_ciyy() . ",'" .
+                                                                                $universityVO->getName() . "','" .
+                                                                                $universityVO->getAddress() . "','" .
+                                                                                $universityVO->getZip_code() . "','" .
+                                                                                $universityVO->getInitials() . "');";
+            $stmt = $conn->query($sql);
+            return 'INSERTED';
+        }
     }
     
-    public function setName($name) {
-        $this->name = $name;
-    }
-    
-    public function getName() {
-        return $this->name;
-    }
-    
-    public function setAddress($address) {
-        $this->address = $address;
-    }
-    
-    public function getAddress() {
-        return $this->address;
-    }
-    
-    public function setZip_code($zip_code) {
-        $this->zip_code = $zip_code;
-    }
-    
-    public function getZip_code() {
-        return $this->zip_code;
-    }
-    
-    public function setInitials($initials) {
-        $this->initials = $initials;
-    }
-    
-    public function getInitials() {
-        return $this->initials;
-    }
-    
-    //Store in Session city's info
-    public function toSession() {
-        session_start();
-        $_SESSION["id_university"] = $this->id_university;
-        $_SESSION["id_city"] = $this->id_city;
-        $_SESSION["name"] = $this->name;
-        $_SESSION["address"] = $this->address;
-        $_SESSION["zip_code"] = $this->zip_code;
-        $_SESSION["initials"] = $this->initials;
+    //Delete a university
+    public function delete($universityVO) {
+        
+        //if university exists, delete him
+        if($universityVO->getId_university() != "") {
+            $currentUniversityVO = $this->getById_university($universityVO->getId_university());
+            $sql = "DELETE FROM university WHERE id_university=" . $currentUniversityVO->getId_university() . ";";
+            $stmt = $conn->query($sql);
+        }
+        
+        return 'DELETED';
     }
 
-    //Generate string to send info back to javascript
-    public function toString() {
-        $string = $this->getId_university() . "," . $this->getId_city() . "," . $this->getName() . "," . $this->getAddress() . "," . $this->getZip_code() . "," . $this->getInitials();
-        return $string;
-    }    
-    
 }
+
 ?>
