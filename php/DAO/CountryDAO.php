@@ -18,21 +18,20 @@ class CountryDAO {
         try {
             $this->conn = new PDO($postgres);
         } catch (PDOException $e) {
-            diedie("Could not connect to the database $db :" . $p->getMessage());
         }
     }
     
     //Execute sql query
     protected function executeQuery($sql) {
         $result = $this->conn->query($sql);
-        $numRows = count($result);
+        //Fetch all results
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        $numRows = count($row);
         if($numRows > 0) {
             for ($i = 0; $i < $numRows; $i++) {
-                //Fetch each result
-                $row = $result->fetch(PDO::FETCH_ASSOC);
                 //Store in countryVO array
-                $countryVO[$i] = new CountryVO($row["id_country"],
-                                               $row["name"]);
+                $countryVO[$i] = new CountryVO($row[$i]["id_country"],
+                                               $row[$i]["name"]);
             }
         }
         return $countryVO;
